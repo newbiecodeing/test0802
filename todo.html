@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * { margin: 0; padding: 0;}
+        form::after { content: ""; display: block; clear: both;}
+
+        #wrap { width: 600px; margin: 0 auto;}
+        h2 { text-align: center; color: blue; margin: 20px 0;}
+        form { background-color: blue; padding: 30px 40px; color: #fff;
+               text-align: center;}
+        input { border: none; width: 440px; padding: 10px; font-size: 18px;}
+        input:focus { outline: none;}
+        .addbtn { border: none; width: 50px; padding: 10px; background-color: #fff;
+                  box-shadow: 1px 2px 4px #167dae; color: #555; text-align: center;
+                  font-size: 14px; transition: .3s; cursor: pointer;} 
+
+        ul { list-style: none;}
+        ul li { cursor: pointer; position: relative; padding: 12px 10px 12px 40px;
+                background-color: #eee; font-size: 18px; transition: .3s;}
+        ul li:nth-child(odd) { background-color: #f9f9f9;}
+        ul li:hover { background-color: #ddd;}
+
+        .close { position: absolute; right: 0; top: 0; padding: 12px 16px; border: none;
+                 background-color: #167dae;}
+        .close:hover { background-color: #3ba8db; color: #fff;}
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <h2>TODO list</h2>
+        <form action="">
+            <input type="text" id="item" autofocus>
+            <span id="add" class="addbtn">등록</span>
+        </form>
+        <ul id="itemList">
+           <!---- <li>책읽기</li> -->
+        </ul>
+    </div>
+    <script>
+        let itemBox = document.getElementById('item');
+        let addBtn = document.getElementById('add');
+        let ul = document.getElementById('itemList');
+
+        let itemList = []; //빈배열
+
+        addBtn.addEventListener("click", addList);
+
+        function addList() {
+            //alert('click');
+            let itemText = itemBox.value;
+
+           
+
+            if ( itemText != "" && itemText != null) {
+                itemList.push(itemText);
+
+                itemBox.value = ""; //글을 먼저 push등록한 다음에 빈 박스로 리턴
+                itemBox.focus();
+            }
+            let li = "";
+
+            for (let i = 0; i < itemList.length; i++) {
+            li += "<li>" + itemList[i] + "<span class='close' id='"+i+"'> x </span>" + "</li>"
+            }
+            ul.innerHTML = li;
+
+            let closeBtn = document.querySelectorAll('.close');
+            for (let i = 0; i < closeBtn.length; i++) {
+            closeBtn[i].addEventListener("click", function(){
+                let indexNum = this.getAttribute("id");
+                itemList.splice(indexNum,1);
+
+                
+            });
+        }
+        }
+    </script>
+</body>
+</html>
